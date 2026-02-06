@@ -30,12 +30,3 @@ services:
       interval: 10s
       timeout: 5s
       retries: 20
-    networks:
-      - llm-network
-
-# network is added only for local testing...
-
-networks:
-  llm-network:
-    external: true
-    name: llm-network
