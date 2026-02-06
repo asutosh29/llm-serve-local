@@ -3,22 +3,45 @@ Local Language Model serving
 
 # Setup Instructions
 
+## Gateway and UI
+
 ```bash
+cd ./gateway
 cp .env.sample .env
 ```
-Fill all the env variables
 
-# Docker setup
-```bash
-docker network create llm-network
-```
-Once the network is created
+### Config setup
+**Reference**
+
+```LITELLM_MASTER_KEY```: This sets the default password for the admin and the master API KEY
+
+```OPENAI_API_BASE_URL```: This points the Openai api compatiable server or gateway used by openweb ui
+
+```OPENAI_API_KEY```: API keys for Openai api compatiable server or gateway used by open web ui
+
+```WEBUI_URL```: URL of the chat ui
+
+```CORS_ALLOW_ORIGIN```: URL of the chat ui
+
+```WEBUI_ADMIN_EMAIL```: Default admin email for open web ui
+
+```WEBUI_ADMIN_PASSWORD```: Default admin password for open web ui
+
+---
+```NOTE```: Make sure that litellm config file has valid config and it is not empty. 
+
+
+### Docker setup
 ```bash
 docker compose up -d
 ```
-run the above command in the directories gateway and vllm respectively
+## vLLM
+Make sure you have compatiable Nvidia drivers and CUDA toolkit
 
-```NOTE:``` This is for dev testing. In real deployment vllm container will be deployed and its https url will be added to the gateway and ui which is hosted elsewhere.
+```bash
+cd ./vllm
+docker compose up -d
+```
 
 # Components
 lm-serve has 3 major componenet
@@ -26,24 +49,4 @@ lm-serve has 3 major componenet
 2. LLM Proxy - litellm (port 4000)
 3. Chat UI - Open Web UI (port 8080)
 
-# Proxy setup
-Setup nginx proxy with required setting and forward the web socket request from nginx to the web ui container
-
-```conf
-server {
-        listen 8000;
-        server_name vllm;
-
-        location / {
-            proxy_pass http://vllm:8000;
-            proxy_http_version 1.1;
-            proxy_set_header Upgrade $http_upgrade;
-            proxy_set_header Connection "upgrade";
-            proxy_set_header Host $host;
-            proxy_set_header X-Real-IP $remote_addr;
-            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-
-        }
-    }
-```
-
+The LLM instances can run anywhere. They can be added to litellm via the dashboard or editting ```litellm_config.yaml```
