@@ -18,6 +18,10 @@ gateway-up: ## Start the Gateway service (detached)
 gateway-down: ## Stop the Gateway service
 	@docker compose -f ./gateway/docker-compose.yaml down
 
+deploy-gateway: ## Pulls the latest on prod branch and updates the Gateway service
+	@git pull origin amx/prod
+	@make gateway-up 
+
 clean: ## Cleans any hanging volumes
 	@docker compose -f ./vllm/docker-compose.yaml down -v
 	@docker compose -f ./gateway/docker-compose.yaml down -v

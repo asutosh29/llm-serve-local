@@ -3,7 +3,7 @@ name: Deploy to VPS
 on:
   push:
     branches:
-      - amx/testing  # Or 'master' depending on your repo
+      - amx/prod
 
 jobs:
   deploy:
