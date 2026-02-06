@@ -19,6 +19,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            cd /home/amx/llm-major-demo/llm-serve-local
+            cd /home/amx/llm-major-demo/llm-serve-local/
             git pull origin amx/testing
+            cd /home/amx/llm-major-demo/llm-serve-local/gateway
             docker compose up -d
