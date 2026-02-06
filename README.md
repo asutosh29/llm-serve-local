@@ -50,3 +50,17 @@ lm-serve has 3 major componenet
 3. Chat UI - Open Web UI (port 8080)
 
 The LLM instances can run anywhere. They can be added to litellm via the dashboard or editting ```litellm_config.yaml```
+
+# Quick Help
+## How to add new models to litellm proxy?
+This can be done in 2 ways
+
+1. Edit ```litellm_config.yaml``` and add the required models mcp servers etc.
+
+2. Login on the admin present on ```<gateway>/ui``` with default credentials as ```admin``` and password as ```<LITELLM_MASTER_KEY>```. Go the Models + Endpoints section add new models
+
+## How to invite new users to litellm and configure them?
+This can be done by the admin only from the Access control section
+
+## How do I give poeple access to personal accounts on openwebui?
+By default only the Admin account is allowed. This can be changed in the admin settings to allow new user registrations.
