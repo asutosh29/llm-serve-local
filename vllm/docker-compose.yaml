@@ -2,18 +2,17 @@ services:
   vllm:
     image: vllm/vllm-openai:latest
     container_name: vllm-server-new
-    runtime: nvidia
-    ipc: host                     # Critical for PyTorch/vLLM performance
+    ipc: host # Critical for PyTorch/vLLM performance
     environment:
-      - HF_TOKEN=${HF_TOKEN}     
+      - HF_TOKEN=${HF_TOKEN}
     volumes:
       - ${HOME}/.cache/huggingface:/root/.cache/huggingface
     ports:
-      - "9001:8000"               
+      - "9001:8000"
     deploy:
       resources:
         limits:
-         memory: 24g              # Strict RAM limit as requested
+          memory: 24g # Strict RAM limit as requested
         reservations:
           devices:
             - driver: nvidia

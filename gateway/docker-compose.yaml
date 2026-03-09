@@ -50,15 +50,17 @@ services:
     volumes:
       - open-webui:/app/backend/data
     environment:
-      - 'OPENAI_API_BASE_URL=${OPENAI_API_BASE_URL}'
-      - 'OPENAI_API_KEY=${LITELLM_MASTER_KEY}'
-      - 'WEBUI_SECRET_KEY=${WEBUI_SECRET_KEY}'
+      - "OPENAI_API_BASE_URL=${OPENAI_API_BASE_URL}"
+      - "OPENAI_API_KEY=${LITELLM_MASTER_KEY}"
+      - "WEBUI_SECRET_KEY=${WEBUI_SECRET_KEY}"
     env_file:
       - .env
     depends_on:
       - litellm
     extra_hosts:
       - host.docker.internal:host-gateway
+    networks:
+      - llm-network
 
 volumes:
   postgres_data:
