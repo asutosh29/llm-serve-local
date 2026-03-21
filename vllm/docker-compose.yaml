@@ -2,18 +2,17 @@ services:
   vllm:
     image: vllm/vllm-openai:latest
     container_name: vllm-server-new
-    runtime: nvidia
-    ipc: host                     # Critical for PyTorch/vLLM performance
+    ipc: host # Critical for PyTorch/vLLM performance
     environment:
-      - HF_TOKEN=${HF_TOKEN}     
+      - HF_TOKEN=${HF_TOKEN}
     volumes:
       - ${HOME}/.cache/huggingface:/root/.cache/huggingface
     ports:
-      - "9001:8000"               
+      - "9001:8000"
     deploy:
       resources:
         limits:
-         memory: 24g              # Strict RAM limit as requested
+          memory: 24g # Strict RAM limit as requested
         reservations:
           devices:
             - driver: nvidia
@@ -21,10 +20,10 @@ services:
               capabilities: [gpu]
     command: >
       --model Qwen/Qwen2.5-0.5B-Instruct
-      # --swap-space 0
-      # --gpu-memory-utilization 0.8
-      # --max-model-len 2048
-      # --enforce-eager
+    #  --swap-space 0
+    # --gpu-memory-utilization 0.8
+    # --max-model-len 2048
+    # --enforce-eager
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:8000/health || exit 1"]
       interval: 10s

@@ -3,22 +3,45 @@ Local Language Model serving
 
 # Setup Instructions
 
+## Gateway and UI
+
 ```bash
+cd ./gateway
 cp .env.sample .env
 ```
-Fill all the env variables
 
-# Docker setup
-```bash
-docker network create llm-network
-```
-Once the network is created
+### Config setup
+**Reference**
+
+```LITELLM_MASTER_KEY```: This sets the default password for the admin and the master API KEY
+
+```OPENAI_API_BASE_URL```: This points the Openai api compatiable server or gateway used by openweb ui
+
+```OPENAI_API_KEY```: API keys for Openai api compatiable server or gateway used by open web ui
+
+```WEBUI_URL```: URL of the chat ui
+
+```CORS_ALLOW_ORIGIN```: URL of the chat ui
+
+```WEBUI_ADMIN_EMAIL```: Default admin email for open web ui
+
+```WEBUI_ADMIN_PASSWORD```: Default admin password for open web ui
+
+---
+```NOTE```: Make sure that litellm config file has valid config and it is not empty. 
+
+
+### Docker setup
 ```bash
 docker compose up -d
 ```
-run the above command in the directories gateway and vllm respectively
+## vLLM
+Make sure you have compatiable Nvidia drivers and CUDA toolkit
 
-```NOTE:``` This is for dev testing. In real deployment vllm container will be deployed and its https url will be added to the gateway and ui which is hosted elsewhere.
+```bash
+cd ./vllm
+docker compose up -d
+```
 
 # Components
 lm-serve has 3 major componenet
@@ -26,3 +49,18 @@ lm-serve has 3 major componenet
 2. LLM Proxy - litellm (port 4000)
 3. Chat UI - Open Web UI (port 8080)
 
+The LLM instances can run anywhere. They can be added to litellm via the dashboard or editting ```litellm_config.yaml```
+
+# Quick Help
+## How to add new models to litellm proxy?
+This can be done in 2 ways
+
+1. Edit ```litellm_config.yaml``` and add the required models mcp servers etc.
+
+2. Login on the admin present on ```<gateway>/ui``` with default credentials as ```admin``` and password as ```<LITELLM_MASTER_KEY>```. Go the Models + Endpoints section add new models
+
+## How to invite new users to litellm and configure them?
+This can be done by the admin only from the Access control section
+
+## How do I give poeple access to personal accounts on openwebui?
+By default only the Admin account is allowed. This can be changed in the admin settings to allow new user registrations.
