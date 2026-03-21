@@ -1,7 +1,0 @@
-# Use for sending emails when onboarding a new user
-litellm_settings:
-    callbacks: ["resend_email"]
-
-# Send emails on alerts. Can be extended to other notifications also.
-general_settings:
-  alerts: ["email"]
