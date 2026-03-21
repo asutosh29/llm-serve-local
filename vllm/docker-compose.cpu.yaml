@@ -1,0 +1,27 @@
+services:
+  vllm:
+    image: vllm/vllm-openai-cpu:latest-x86_64
+    container_name: vllm-server-cpu-new
+    ipc: host
+    cap_add:
+      - SYS_NICE
+    environment:
+      - HF_TOKEN=${HF_TOKEN}
+      - VLLM_CPU_KVCACHE_SPACE=2
+    volumes:
+      - ${HOME}/.cache/huggingface:/root/.cache/huggingface
+    ports:
+      - "9002:8000"
+    deploy:
+      resources:
+        limits:
+         memory: 24g              # Strict RAM limit as requested
+    command: >
+      --model HuggingFaceTB/SmolLM2-135M-Instruct
+      --max-model-len 2048
+      --enforce-eager
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8000/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
