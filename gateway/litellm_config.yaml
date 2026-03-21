@@ -4,3 +4,11 @@ model_list:
       model: hosted_vllm/Qwen/Qwen2.5-0.5B-Instruct
       api_base: http://amx:9001/v1
       api_key: sk-1234 # it is also default password for "admin"
+
+# Use for sending emails when onboarding a new user
+litellm_settings:
+    callbacks: ["resend_email"]
+
+# Send emails on alerts. Can be extended to other notifications also.
+general_settings:
+  alerts: ["email"]
